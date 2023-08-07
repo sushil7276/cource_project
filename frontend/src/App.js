@@ -18,6 +18,7 @@ import CoursePage from './components/CoursePage/CoursePage';
 import Profile from './components/Profile/Profile';
 import UpdateProfile from './components/Profile/UpdateProfile';
 import ChangePassword from './components/Profile/ChangePassword';
+import Dashboard from './components/Admin/Dashboard';
 
 function App() {
   // window.addEventListener('contextmenu', e => {
@@ -36,6 +37,11 @@ function App() {
         <Route path="/Profile" element={<Profile />} />
         <Route path="/updateprofile" element={<UpdateProfile />} />
         <Route path="/changepassword" element={<ChangePassword />} />
+
+        {/* Admin Routes */}
+        <Route path="/admin/dashboard" element={<Dashboard />} />
+        <Route path="/admin/createcourse" element={<Dashboard />} />
+        <Route path="/admin/courses" element={<Dashboard />} />
 
         <Route path="/contact" element={<Contact />} />
         <Route path="/request" element={<Request />} />
