@@ -49,6 +49,7 @@ function Header() {
         height={'12'}
         rounded={'full'}
         position={'fixed'}
+        zIndex={'overlay'}
         top={'6'}
         left={'6'}
         onClick={onOpen}
