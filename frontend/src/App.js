@@ -25,7 +25,7 @@ import AdminCourses from './components/Admin/AdminCourses';
 
 function App() {
   // window.addEventListener('contextmenu', e => {
-  //   e.preventDefault();
+  //   e.preventDefault();  8149414121
   // });
 
   return (
