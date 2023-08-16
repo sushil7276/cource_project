@@ -8,6 +8,10 @@ config({
 
 const app = express();
 
+// Using middleware
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 // importing & Using Routes
 import course from "./routes/courseRoutes.js";
 import user from "./routes/userRoutes.js";
