@@ -1,5 +1,6 @@
 import express from "express";
 import { config } from "dotenv";
+import cookieParser from "cookie-parser";
 
 // dotenv file configuration
 config({
@@ -11,6 +12,7 @@ const app = express();
 // Using middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 // importing & Using Routes
 import course from "./routes/courseRoutes.js";
