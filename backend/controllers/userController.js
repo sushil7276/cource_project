@@ -4,6 +4,7 @@ import { User } from "../models/User.js";
 import { sendToken } from "../utils/sendToken.js";
 import { sendEmail } from "../utils/sendEmail.js";
 import crypto from "crypto";
+import { Course } from "../models/Course.js";
 
 export const getAllUsers = (req, res, next) => {
   console.log("All Users");
@@ -183,5 +184,41 @@ export const updateProfile = CatchAsyncError(async (req, res, next) => {
 export const updateProfilePic = CatchAsyncError(async (req, res, next) => {
   // cloudinary upload
 
+  const user = await User.findById(req.user._id);
+});
+
+// Add to playList
+export const addToPlayList = CatchAsyncError(async (req, res, next) => {
+  const user = await User.findById(req.user._id);
+  const course = await Course.findById(req.body.courseId);
+
+  if (!course) {
+    return next(new ErrorHandler("Course not found", 404));
+  }
+
+  // If course is already in the playlist
+  const itemExist = user.playlist.find((item) => {
+    if (item.course.toString() === course._id.toString()) return true;
+  });
+  if (itemExist) {
+    return next(new ErrorHandler("Course already in playlist", 409));
+  }
+
+  // If course is not in the playlist then add it
+  user.playlist.push({
+    course: course._id,
+    poster: course.poster.url,
+  });
+
+  await user.save();
+
+  res.status(201).json({
+    success: true,
+    message: "Added to playlist successfully",
+  });
+});
+
+// delete from playLis
+export const deleteFromPlayList = CatchAsyncError(async (req, res, next) => {
   const user = await User.findById(req.user._id);
 });
