@@ -2,6 +2,7 @@ import { CatchAsyncError } from "../middlewares/CatchAsyncError.js";
 import ErrorHandler from "../utils/errorHandler.js";
 import { User } from "../models/User.js";
 import { sendToken } from "../utils/sendToken.js";
+import { sendEmail } from "../utils/sendEmail.js";
 
 export const getAllUsers = (req, res, next) => {
   console.log("All Users");
@@ -101,6 +102,36 @@ export const changePassword = CatchAsyncError(async (req, res, next) => {
     success: true,
     message: "Password changed successfully",
   });
+});
+
+// Forget Password
+export const forgetPassword = CatchAsyncError(async (req, res, next) => {
+  const { email } = req.body;
+
+  const user = await User.findOne({ email });
+
+  if (!user) return next(new ErrorHandler("User not found", 400));
+
+  const resetToken = await user.getResetToken();
+
+  await user.save();
+
+  const url = `${process.env.FRONTEND_URL}/resetpassword/${resetToken}`;
+
+  const message = `Click on the link to reset your password. ${url}. If you have not request then please ignore.`;
+
+  // Send token via email
+  await sendEmail(user.email, "CourseBundler Reset Password", message);
+
+  res.status(200).json({
+    success: true,
+    message: `Reset Token has been sent to ${user.email}`,
+  });
+});
+
+// Reset Password
+export const resetPassword = CatchAsyncError(async (req, res, next) => {
+  const user = await User.findById(req.user._id);
 });
 
 // Update Profile

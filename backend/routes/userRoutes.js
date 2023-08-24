@@ -1,11 +1,13 @@
 import express from "express";
 import {
   changePassword,
+  forgetPassword,
   getAllUsers,
   getMyProfile,
   login,
   logout,
   register,
+  resetPassword,
   updateProfile,
   updateProfilePic,
 } from "../controllers/userController.js";
@@ -22,6 +24,12 @@ router.route("/register").post(register);
 // Login and Logout
 router.route("/login").post(login);
 router.route("/logout").get(logout);
+
+// Forget Password
+router.route("/forgetpassword").post(forgetPassword);
+
+// Reset Password
+router.route("/resetpassword/:token").post(resetPassword);
 
 // Get My Profile
 router.route("/me").get(isAuthentication, getMyProfile);
