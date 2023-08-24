@@ -190,7 +190,7 @@ export const updateProfilePic = CatchAsyncError(async (req, res, next) => {
 // Add to playList
 export const addToPlayList = CatchAsyncError(async (req, res, next) => {
   const user = await User.findById(req.user._id);
-  const course = await Course.findById(req.body.courseId);
+  const course = await Course.findById(req.body.id);
 
   if (!course) {
     return next(new ErrorHandler("Course not found", 404));
@@ -221,4 +221,22 @@ export const addToPlayList = CatchAsyncError(async (req, res, next) => {
 // delete from playLis
 export const deleteFromPlayList = CatchAsyncError(async (req, res, next) => {
   const user = await User.findById(req.user._id);
+  const course = await Course.findById(req.query.id);
+
+  if (!course) {
+    return next(new ErrorHandler("Course not found", 404));
+  }
+
+  const newPlaylist = user.playlist.filter((item) => {
+    if (item.course.toString() !== course._id.toString()) return item;
+  });
+
+  user.playlist = newPlaylist;
+
+  await user.save();
+
+  res.status(201).json({
+    success: true,
+    message: "Removed from playlist successfully",
+  });
 });
