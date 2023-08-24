@@ -3,6 +3,7 @@ import ErrorHandler from "../utils/errorHandler.js";
 import { User } from "../models/User.js";
 import { sendToken } from "../utils/sendToken.js";
 import { sendEmail } from "../utils/sendEmail.js";
+import crypto from "crypto";
 
 export const getAllUsers = (req, res, next) => {
   console.log("All Users");
@@ -131,7 +132,35 @@ export const forgetPassword = CatchAsyncError(async (req, res, next) => {
 
 // Reset Password
 export const resetPassword = CatchAsyncError(async (req, res, next) => {
-  const user = await User.findById(req.user._id);
+  const { token } = req.params;
+
+  const resetPasswordToken = crypto
+    .createHash("sha256")
+    .update(token)
+    .digest("hex");
+
+  const user = await User.findOne({
+    resetPasswordToken,
+    resetPasswordExpire: {
+      $gt: Date.now(),
+    },
+  });
+
+  if (!user)
+    return next(
+      new ErrorHandler("Reset Token is invalid or has been expired", 400)
+    );
+
+  user.password = req.body.password;
+  user.resetPasswordToken = undefined;
+  user.resetPasswordExpire = undefined;
+
+  await user.save();
+
+  res.status(200).json({
+    success: true,
+    message: "Password reset successfully",
+  });
 });
 
 // Update Profile
