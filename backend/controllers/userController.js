@@ -78,3 +78,50 @@ export const getMyProfile = CatchAsyncError(async (req, res, next) => {
     user,
   });
 });
+
+// Change password
+export const changePassword = CatchAsyncError(async (req, res, next) => {
+  const { oldPassword, newPassword } = req.body;
+
+  if (!oldPassword || !newPassword) {
+    return next(new ErrorHandler("Please enter all field", 400));
+  }
+
+  const user = await User.findById(req.user._id).select("+password");
+
+  const isMatch = await user.comparePassword(oldPassword);
+
+  if (!isMatch) return next(new ErrorHandler("Incorrect Old Password", 401));
+
+  user.password = newPassword;
+
+  await user.save();
+
+  res.status(200).json({
+    success: true,
+    message: "Password changed successfully",
+  });
+});
+
+// Update Profile
+export const updateProfile = CatchAsyncError(async (req, res, next) => {
+  const { name, email } = req.body;
+
+  const user = await User.findById(req.user._id);
+  if (name) user.name = name;
+  if (email) user.email = email;
+
+  await user.save();
+
+  res.status(200).json({
+    success: true,
+    message: "Profile updated successfully",
+  });
+});
+
+// Update Profile Picture
+export const updateProfilePic = CatchAsyncError(async (req, res, next) => {
+  // cloudinary upload
+
+  const user = await User.findById(req.user._id);
+});
