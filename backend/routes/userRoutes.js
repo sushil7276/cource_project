@@ -29,7 +29,7 @@ router.route("/logout").get(logout);
 router.route("/forgetpassword").post(forgetPassword);
 
 // Reset Password
-router.route("/resetpassword/:token").post(resetPassword);
+router.route("/resetpassword/:token").put(resetPassword);
 
 // Get My Profile
 router.route("/me").get(isAuthentication, getMyProfile);
