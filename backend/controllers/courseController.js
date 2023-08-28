@@ -1,6 +1,7 @@
 import { Course } from "../models/Course.js";
 import { CatchAsyncError } from "../middlewares/CatchAsyncError.js";
 import ErrorHandler from "../utils/errorHandler.js";
+import getDataUri from "../utils/dataUri.js";
 
 export const getAllCourse = CatchAsyncError(async (req, res, next) => {
   const course = await Course.find().select("-lectures");
@@ -18,7 +19,8 @@ export const createCourse = CatchAsyncError(async (req, res, next) => {
     return next(new ErrorHandler("Please add all fields", 400));
   }
 
-  // const file = req.file;
+  const file = req.file;
+  const fileUri = await getDataUri(file);
 
   await Course.create({
     title,
