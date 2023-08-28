@@ -5,6 +5,7 @@ import {
   getAllCourse,
   getCourseLectures,
 } from "../controllers/courseController.js";
+import singleUpload from "../middlewares/multer.js";
 
 const router = express.Router();
 
@@ -12,9 +13,12 @@ const router = express.Router();
 router.route("/courses").get(getAllCourse);
 
 // Create new course - only admin can access this
-router.route("/createcourse").post(createCourse);
+router.route("/createcourse").post(singleUpload, createCourse);
 
 // Add lecture, Delete Course, Get Course Details
-router.route("/course/:id").get(getCourseLectures).post(addLecture);
+router
+  .route("/course/:id")
+  .get(getCourseLectures)
+  .post(singleUpload, addLecture);
 
 export default router;
