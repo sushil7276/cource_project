@@ -1,5 +1,10 @@
 import express from "express";
-import { createCourse, getAllCourse } from "../controllers/courseController.js";
+import {
+  addLecture,
+  createCourse,
+  getAllCourse,
+  getCourseLectures,
+} from "../controllers/courseController.js";
 
 const router = express.Router();
 
@@ -10,6 +15,6 @@ router.route("/courses").get(getAllCourse);
 router.route("/createcourse").post(createCourse);
 
 // Add lecture, Delete Course, Get Course Details
-router.route("/create/:id").get();
+router.route("/course/:id").get(getCourseLectures).post(addLecture);
 
 export default router;
