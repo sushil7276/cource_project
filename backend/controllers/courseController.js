@@ -60,26 +60,38 @@ export const getCourseLectures = CatchAsyncError(async (req, res, next) => {
   });
 });
 
-// Add Lectures
+// Add Lectures (Max video size 100 mb)
 export const addLecture = CatchAsyncError(async (req, res, next) => {
   const { id } = req.params;
   const { title, description } = req.body;
 
-  // const file = req.file;
+  if (!title || !description) {
+    return next(new ErrorHandler("Please add all fields", 400));
+  }
 
   const course = await Course.findById(id);
   if (!course) {
     return next(new ErrorHandler("Course not found", 404));
   }
 
-  // Upload file here
+  const file = req.file;
+  if (!file) {
+    return next(new ErrorHandler("Please upload a video", 400));
+  }
+
+  const fileUri = await getDataUri(file);
+
+  const myCloud = await cloudinary.v2.uploader.upload(fileUri.content, {
+    resource_type: "video",
+    folder: "lecture",
+  });
 
   course.lectures.push({
     title,
     description,
     video: {
-      public_id: "temp_id",
-      url: "url",
+      public_id: myCloud.public_id,
+      url: myCloud.secure_url,
     },
   });
 

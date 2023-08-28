@@ -21,7 +21,7 @@ router
 // Add lecture, Delete Course, Get Course Details
 router
   .route("/course/:id")
-  .get(getCourseLectures)
-  .post(singleUpload, addLecture);
+  .get(isAuthentication, getCourseLectures)
+  .post(isAuthentication, authorizeAdmin, singleUpload, addLecture);
 
 export default router;
