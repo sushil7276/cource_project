@@ -3,6 +3,7 @@ import {
   addToPlayList,
   changePassword,
   deleteFromPlayList,
+  deleteMyProfile,
   deleteUser,
   forgetPassword,
   getAllUsers,
@@ -36,8 +37,11 @@ router.route("/forgetpassword").post(forgetPassword);
 // Reset Password
 router.route("/resetpassword/:token").put(resetPassword);
 
-// Get My Profile
-router.route("/me").get(isAuthentication, getMyProfile);
+// Get My Profile / delete My Profile --- Only Logged In User
+router
+  .route("/me")
+  .get(isAuthentication, getMyProfile)
+  .delete(isAuthentication, deleteMyProfile);
 
 // Change Password
 router.route("/changepassword").put(isAuthentication, changePassword);

@@ -293,6 +293,10 @@ export const deleteUser = CatchAsyncError(async (req, res, next) => {
   const user = await User.findById(id);
   if (!user) return next(new ErrorHandler("User not found", 404));
 
+  if (user.role === "admin") {
+    return next(new ErrorHandler("You cannot delete this user", 403));
+  }
+
   await cloudinary.v2.uploader.destroy(user.avatar.public_id);
 
   // Cancel subscription of all courses
@@ -303,4 +307,24 @@ export const deleteUser = CatchAsyncError(async (req, res, next) => {
     success: true,
     message: "User deleted successfully",
   });
+});
+
+// Delete My Profile
+export const deleteMyProfile = CatchAsyncError(async (req, res, next) => {
+  const user = await User.findById(req.user._id);
+  if (!user) return next(new ErrorHandler("User not found", 404));
+
+  await cloudinary.v2.uploader.destroy(user.avatar.public_id);
+
+  // Cancel subscription of all courses
+
+  await user.remove();
+
+  res
+    .status(200)
+    .cookie("token", null, { expires: new Date(Date.now()) })
+    .json({
+      success: true,
+      message: "User deleted successfully",
+    });
 });
