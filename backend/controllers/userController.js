@@ -5,6 +5,8 @@ import { sendToken } from "../utils/sendToken.js";
 import { sendEmail } from "../utils/sendEmail.js";
 import crypto from "crypto";
 import { Course } from "../models/Course.js";
+import cloudinary from "cloudinary";
+import getDataUri from "../utils/dataUri.js";
 
 export const getAllUsers = (req, res, next) => {
   console.log("All Users");
@@ -16,26 +18,26 @@ export const getAllUsers = (req, res, next) => {
 
 export const register = CatchAsyncError(async (req, res, next) => {
   const { name, email, password } = req.body;
-
-  // const file = req.file;
-
-  if (!name || !email || !password) {
+  const file = req.file;
+  if (!name || !email || !password || !file) {
     return next(new ErrorHandler("Please enter all field", 400));
   }
 
   let user = await User.findOne({ email });
-
   if (user) return next(new ErrorHandler("User already Exist", 409));
 
-  // upload file on cloudinary
+  const fileUri = await getDataUri(file);
+  const myCloud = await cloudinary.v2.uploader.upload(fileUri.content, {
+    folder: "course_avatars",
+  });
 
   user = await User.create({
     name,
     email,
     password,
     avatar: {
-      public_id: "temp_id",
-      url: "temp_url",
+      public_id: myCloud.public_id,
+      url: myCloud.secure_url,
     },
   });
 
@@ -182,9 +184,30 @@ export const updateProfile = CatchAsyncError(async (req, res, next) => {
 
 // Update Profile Picture
 export const updateProfilePic = CatchAsyncError(async (req, res, next) => {
-  // cloudinary upload
-
   const user = await User.findById(req.user._id);
+
+  const file = req.file;
+  const fileUri = await getDataUri(file);
+  if (!file) {
+    return next(new ErrorHandler("Please upload a file", 400));
+  }
+  await cloudinary.v2.uploader.destroy(user.avatar.public_id);
+
+  const myCloud = await cloudinary.v2.uploader.upload(fileUri.content, {
+    folder: "course_avatars",
+  });
+
+  user.avatar = {
+    public_id: myCloud.public_id,
+    url: myCloud.secure_url,
+  };
+
+  await user.save();
+
+  res.status(200).json({
+    success: true,
+    message: "Profile picture updated successfully",
+  });
 });
 
 // Add to playList

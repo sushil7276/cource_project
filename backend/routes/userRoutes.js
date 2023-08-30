@@ -14,6 +14,7 @@ import {
   updateProfilePic,
 } from "../controllers/userController.js";
 import { isAuthentication } from "../middlewares/Auth.js";
+import singleUpload from "../middlewares/multer.js";
 
 const router = express.Router();
 
@@ -21,7 +22,7 @@ const router = express.Router();
 router.route("/users").get(getAllUsers);
 
 // Register
-router.route("/register").post(register);
+router.route("/register").post(singleUpload, register);
 
 // Login and Logout
 router.route("/login").post(login);
@@ -43,7 +44,9 @@ router.route("/changepassword").put(isAuthentication, changePassword);
 router.route("/updateprofile").put(isAuthentication, updateProfile);
 
 // Update Profile Picture
-router.route("/updateprofilepicture").put(isAuthentication, updateProfilePic);
+router
+  .route("/updateprofilepicture")
+  .put(isAuthentication, singleUpload, updateProfilePic);
 
 // Add to playList
 router.route("/addtoplaylist").post(isAuthentication, addToPlayList);
