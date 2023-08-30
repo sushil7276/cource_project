@@ -8,13 +8,14 @@ import { Course } from "../models/Course.js";
 import cloudinary from "cloudinary";
 import getDataUri from "../utils/dataUri.js";
 
-export const getAllUsers = (req, res, next) => {
-  console.log("All Users");
+export const getAllUsers = CatchAsyncError(async (req, res, next) => {
+  const users = await User.find();
   res.status(200).json({
     success: true,
-    message: "All Users",
+    message: `Total Users ${users.length}`,
+    users,
   });
-};
+});
 
 export const register = CatchAsyncError(async (req, res, next) => {
   const { name, email, password } = req.body;
