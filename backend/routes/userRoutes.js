@@ -13,13 +13,13 @@ import {
   updateProfile,
   updateProfilePic,
 } from "../controllers/userController.js";
-import { isAuthentication } from "../middlewares/Auth.js";
+import { authorizeAdmin, isAuthentication } from "../middlewares/Auth.js";
 import singleUpload from "../middlewares/multer.js";
 
 const router = express.Router();
 
 // Get All Users
-router.route("/users").get(getAllUsers);
+router.route("/admin/users").get(isAuthentication, authorizeAdmin, getAllUsers);
 
 // Register
 router.route("/register").post(singleUpload, register);
