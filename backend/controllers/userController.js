@@ -211,6 +211,27 @@ export const updateProfilePic = CatchAsyncError(async (req, res, next) => {
   });
 });
 
+// Update User Role --- Only Admin
+export const updateUserRole = CatchAsyncError(async (req, res, next) => {
+  const { id } = req.params;
+
+  const user = await User.findById(id);
+  if (!user) return next(new ErrorHandler("User not found", 404));
+
+  if (user.role === "user") {
+    user.role = "admin";
+  } else {
+    user.role = "user";
+  }
+
+  await user.save();
+
+  res.status(200).json({
+    success: true,
+    message: "User role updated successfully",
+  });
+});
+
 // Add to playList
 export const addToPlayList = CatchAsyncError(async (req, res, next) => {
   const user = await User.findById(req.user._id);
@@ -262,5 +283,24 @@ export const deleteFromPlayList = CatchAsyncError(async (req, res, next) => {
   res.status(201).json({
     success: true,
     message: "Removed from playlist successfully",
+  });
+});
+
+// Delete User --- Only Admin
+export const deleteUser = CatchAsyncError(async (req, res, next) => {
+  const { id } = req.params;
+
+  const user = await User.findById(id);
+  if (!user) return next(new ErrorHandler("User not found", 404));
+
+  await cloudinary.v2.uploader.destroy(user.avatar.public_id);
+
+  // Cancel subscription of all courses
+
+  await user.remove();
+
+  res.status(200).json({
+    success: true,
+    message: "User deleted successfully",
   });
 });
