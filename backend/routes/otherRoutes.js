@@ -4,6 +4,7 @@ import {
   courseRequest,
   getDashboardStats,
 } from "../controllers/othersController.js";
+import { authorizeAdmin, isAuthentication } from "../middlewares/auth.js";
 
 const router = express.Router();
 
@@ -14,6 +15,8 @@ router.route("/contact").post(contact);
 router.route("/course-request").post(courseRequest);
 
 // Get Admin Dashboard Stats
-router.route("/admin-stats").get(getDashboardStats);
+router
+  .route("/admin-stats")
+  .get(isAuthentication, authorizeAdmin, getDashboardStats);
 
 export default router;
