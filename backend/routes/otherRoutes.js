@@ -3,7 +3,7 @@ import {
   contact,
   courseRequest,
   getDashboardStats,
-} from "../controllers/othersController";
+} from "../controllers/othersController.js";
 
 const router = express.Router();
 
