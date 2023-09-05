@@ -12,7 +12,8 @@ import {
 } from '@chakra-ui/react';
 import { RiDashboardFill, RiLogoutBoxLine, RiMenu5Fill } from 'react-icons/ri';
 import { Link } from 'react-router-dom';
-// import { useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { logout } from '../../../redux/actions/userAction';
 
 const LinkButton = ({ url = '/', title = 'Home', onClose }) => (
   <Link onClick={onClose} to={url}>
@@ -23,14 +24,11 @@ const LinkButton = ({ url = '/', title = 'Home', onClose }) => (
 function Header({ isAuthenticated = false, user }) {
   const { isOpen, onClose, onOpen } = useDisclosure();
 
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   const logoutHandler = () => {
     onClose();
-  };
-
-  const loginHandler = () => {
-    onClose();
+    dispatch(logout());
   };
 
   return (
@@ -100,10 +98,9 @@ function Header({ isAuthenticated = false, user }) {
                 ) : (
                   <>
                     <Link to="/login">
-                      <Button colorScheme={'yellow'} onClick={loginHandler}>
-                        Login
-                      </Button>
+                      <Button colorScheme={'yellow'}>Login</Button>
                     </Link>
+
                     <p>OR</p>
 
                     <Link onClick={onClose} to="/register">

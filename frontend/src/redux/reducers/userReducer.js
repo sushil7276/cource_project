@@ -3,6 +3,7 @@ import { createReducer } from '@reduxjs/toolkit';
 export const userReducer = createReducer(
   {},
   {
+    // Login
     loginRequest: state => {
       state.loading = true;
     },
@@ -20,6 +21,7 @@ export const userReducer = createReducer(
       state.error = action.payload;
     },
 
+    // Load User (Get User Profile)
     loadUserRequest: state => {
       state.loading = true;
     },
@@ -33,6 +35,24 @@ export const userReducer = createReducer(
     loadUserFail: (state, action) => {
       state.loading = false;
       state.isAuthenticated = false;
+      state.error = action.payload;
+    },
+
+    // Logout
+    logoutRequest: state => {
+      state.loading = true;
+    },
+
+    logoutSuccess: (state, action) => {
+      state.loading = false;
+      state.isAuthenticated = false;
+      state.user = null;
+      state.message = action.payload;
+    },
+
+    logoutFail: (state, action) => {
+      state.loading = false;
+      state.isAuthenticated = true;
       state.error = action.payload;
     },
 
