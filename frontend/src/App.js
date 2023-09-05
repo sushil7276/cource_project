@@ -98,7 +98,18 @@ function App() {
         <Route path="/changepassword" element={<ChangePassword />} />
 
         {/* Admin Routes */}
-        <Route path="/admin/dashboard" element={<Dashboard />} />
+        <Route
+          path="/admin/dashboard"
+          element={
+            <ProtectedRoute
+              adminRoute={true}
+              isAuthenticated={isAuthenticated}
+              isAdmin={user && user.role === 'admin'}
+            >
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        />
         <Route path="/admin/createcourse" element={<CreateCourse />} />
         <Route path="/admin/courses" element={<AdminCourses />} />
         <Route path="/admin/users" element={<Users />} />
