@@ -26,6 +26,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import toast, { Toaster } from 'react-hot-toast';
 import { useEffect } from 'react';
 import { loadUser } from './redux/actions/userAction';
+import { ProtectedRoute } from 'protected-route-react';
 
 function App() {
   // window.addEventListener('contextmenu', e => {
@@ -62,8 +63,25 @@ function App() {
         <Route path="/courses" element={<Courses />} />
         <Route path="/course/:id" element={<CoursePage />} />
 
-        <Route path="/login" element={<Login />} />
-        <Route path="/Profile" element={<Profile />} />
+        <Route
+          path="/login"
+          element={
+            <ProtectedRoute
+              isAuthenticated={!isAuthenticated}
+              redirect="/profile"
+            >
+              <Login />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/Profile"
+          element={
+            <ProtectedRoute isAuthenticated={isAuthenticated}>
+              <Profile />
+            </ProtectedRoute>
+          }
+        />
         <Route path="/updateprofile" element={<UpdateProfile />} />
         <Route path="/changepassword" element={<ChangePassword />} />
 
