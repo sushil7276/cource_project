@@ -16,7 +16,7 @@ router.route("/course-request").post(courseRequest);
 
 // Get Admin Dashboard Stats
 router
-  .route("/admin-stats")
+  .route("/admin/stats")
   .get(isAuthentication, authorizeAdmin, getDashboardStats);
 
 export default router;

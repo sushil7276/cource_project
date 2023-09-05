@@ -3,6 +3,8 @@ import { config } from "dotenv";
 import { connectDB } from "./config/database.js";
 import cloudinary from "cloudinary";
 import Razorpay from "razorpay";
+import nodeCron from "node-cron";
+import { Stats } from "./models/Stats.js";
 
 connectDB();
 
@@ -21,6 +23,21 @@ export const instance = new Razorpay({
 config({
   path: "./config/config.env",
 });
+
+// node-corn call 1st of every month
+nodeCron.schedule("0 0 0 1 * *", async () => {
+  try {
+    await Stats.create({});
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+const temp = async () => {
+  await Stats.create({});
+};
+
+temp();
 
 app.listen(process.env.PORT, () => {
   console.log(`server started on Port: ${process.env.PORT}`);
