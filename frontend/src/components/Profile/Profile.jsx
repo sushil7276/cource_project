@@ -24,39 +24,9 @@ import { Link } from 'react-router-dom';
 import coursePoster from '../../assets/images/course.jpg';
 import { fileUploadStyle } from '../Auth/Register';
 
-function Profile() {
+function Profile({ user }) {
   const loading = false;
   const subscriptionLoading = false;
-  const user = {
-    name: 'Sushil',
-    email: 's@gmail.com',
-    createdAt: String(new Date().toISOString()),
-    subscription: {
-      status: 'active',
-    },
-    role: 'user',
-    avatar: {
-      url: 'asdasd',
-    },
-    playlist: [
-      {
-        course: 'sample Course',
-        poster: coursePoster,
-      },
-      {
-        course: 'sample Course 1',
-        poster: coursePoster,
-      },
-      {
-        course: 'sample Course 2',
-        poster: coursePoster,
-      },
-      {
-        course: 'sample Course 3',
-        poster: coursePoster,
-      },
-    ],
-  };
 
   const { isOpen, onClose, onOpen } = useDisclosure();
 
