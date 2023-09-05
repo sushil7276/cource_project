@@ -42,14 +42,15 @@ export const courseRequest = CatchAsyncError(async (req, res, next) => {
 });
 
 export const getDashboardStats = CatchAsyncError(async (req, res, next) => {
-  const stats = await Stats.find().sort({ createdAt: "desc" }).limit(12);
+  const stats = await Stats.find({}).sort({ createdAt: "desc" }).limit(12);
 
   const statsData = [];
-  for (let i = 0; i < stats.length; i++) {
-    statsData.push(stats[i]);
-  }
 
+  for (let i = 0; i < stats.length; i++) {
+    statsData.unshift(stats[i]);
+  }
   const requiredSize = 12 - stats.length;
+
   for (let i = 0; i < requiredSize; i++) {
     statsData.unshift({
       users: 0,
