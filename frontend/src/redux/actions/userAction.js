@@ -1,6 +1,7 @@
 import { server } from '../store';
 import axios from 'axios';
 
+// Login User
 export const login = (email, password) => async dispatch => {
   try {
     dispatch({ type: 'loginRequest' });
@@ -22,6 +23,7 @@ export const login = (email, password) => async dispatch => {
   }
 };
 
+// Load User (Get User Profile)
 export const loadUser = () => async dispatch => {
   try {
     dispatch({ type: 'loadUserRequest' });
@@ -34,6 +36,7 @@ export const loadUser = () => async dispatch => {
   }
 };
 
+// Logout
 export const logout = () => async dispatch => {
   try {
     dispatch({ type: 'logoutRequest' });
@@ -45,5 +48,23 @@ export const logout = () => async dispatch => {
     dispatch({ type: 'logoutSuccess', payload: data.message });
   } catch (error) {
     dispatch({ type: 'logoutFail', payload: error.response.data.message });
+  }
+};
+
+// Register user
+export const register = formData => async dispatch => {
+  try {
+    dispatch({ type: 'registerRequest' });
+
+    const { data } = await axios.post(`${server}/register`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+      withCredentials: true,
+    });
+
+    dispatch({ type: 'registerSuccess', payload: data });
+  } catch (error) {
+    dispatch({ type: 'registerFail', payload: error.response.data.message });
   }
 };
