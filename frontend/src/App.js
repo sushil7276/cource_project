@@ -115,9 +115,42 @@ function App() {
                 </ProtectedRoute>
               }
             />
-            <Route path="/admin/createcourse" element={<CreateCourse />} />
-            <Route path="/admin/courses" element={<AdminCourses />} />
-            <Route path="/admin/users" element={<Users />} />
+            <Route
+              path="/admin/createcourse"
+              element={
+                <ProtectedRoute
+                  adminRoute={true}
+                  isAuthenticated={isAuthenticated}
+                  isAdmin={user && user.role === 'admin'}
+                >
+                  <CreateCourse />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/courses"
+              element={
+                <ProtectedRoute
+                  adminRoute={true}
+                  isAuthenticated={isAuthenticated}
+                  isAdmin={user && user.role === 'admin'}
+                >
+                  <AdminCourses />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/users"
+              element={
+                <ProtectedRoute
+                  adminRoute={true}
+                  isAuthenticated={isAuthenticated}
+                  isAdmin={user && user.role === 'admin'}
+                >
+                  <Users />
+                </ProtectedRoute>
+              }
+            />
 
             <Route path="/contact" element={<Contact />} />
             <Route path="/request" element={<Request />} />
