@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import { ColorModeSwitcher } from '../../../ColorModeSwitcher';
 import {
   Button,
@@ -13,6 +12,7 @@ import {
 } from '@chakra-ui/react';
 import { RiDashboardFill, RiLogoutBoxLine, RiMenu5Fill } from 'react-icons/ri';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
 const LinkButton = ({ url = '/', title = 'Home', onClose }) => (
   <Link onClick={onClose} to={url}>
@@ -20,23 +20,16 @@ const LinkButton = ({ url = '/', title = 'Home', onClose }) => (
   </Link>
 );
 
-function Header() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-
+function Header({ isAuthenticated = false, user }) {
   const { isOpen, onClose, onOpen } = useDisclosure();
 
-  const user = {
-    name: 'sushil',
-    role: 'admin',
-  };
+  const dispatch = useDispatch();
 
   const logoutHandler = () => {
-    setIsAuthenticated(false);
     onClose();
   };
 
   const loginHandler = () => {
-    setIsAuthenticated(true);
     onClose();
   };
 
