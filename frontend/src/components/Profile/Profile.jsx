@@ -21,7 +21,6 @@ import {
 import { useState } from 'react';
 import { RiDeleteBin7Fill } from 'react-icons/ri';
 import { Link } from 'react-router-dom';
-import coursePoster from '../../assets/images/course.jpg';
 import { fileUploadStyle } from '../Auth/Register';
 
 function Profile({ user }) {
