@@ -12,7 +12,7 @@ import {
 } from '@chakra-ui/react';
 import { RiDashboardFill, RiLogoutBoxLine, RiMenu5Fill } from 'react-icons/ri';
 import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+// import { useDispatch } from 'react-redux';
 
 const LinkButton = ({ url = '/', title = 'Home', onClose }) => (
   <Link onClick={onClose} to={url}>
@@ -23,7 +23,7 @@ const LinkButton = ({ url = '/', title = 'Home', onClose }) => (
 function Header({ isAuthenticated = false, user }) {
   const { isOpen, onClose, onOpen } = useDisclosure();
 
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   const logoutHandler = () => {
     onClose();

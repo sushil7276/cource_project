@@ -25,6 +25,7 @@ import AdminCourses from './components/Admin/AdminCourses';
 import { useDispatch, useSelector } from 'react-redux';
 import toast, { Toaster } from 'react-hot-toast';
 import { useEffect } from 'react';
+import { loadUser } from './redux/actions/userAction';
 
 function App() {
   // window.addEventListener('contextmenu', e => {
@@ -48,6 +49,10 @@ function App() {
       dispatch({ type: 'clearMessage' });
     }
   }, [dispatch, error, message]);
+
+  useEffect(() => {
+    dispatch(loadUser());
+  }, [dispatch]);
 
   return (
     <Router>
