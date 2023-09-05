@@ -63,13 +63,12 @@ export const getDashboardStats = CatchAsyncError(async (req, res, next) => {
   const subscriptionCount = statsData[11].subscription;
   const viewsCount = statsData[11].views;
 
-  let usersProfit = true,
-    viewsProfit = true,
-    subscriptionProfit = true;
-
   let usersPercentage = 0,
     viewsPercentage = 0,
     subscriptionPercentage = 0;
+  let usersProfit = true,
+    viewsProfit = true,
+    subscriptionProfit = true;
 
   if (statsData[10].users === 0) usersPercentage = usersCount * 100;
   if (statsData[10].views === 0) viewsPercentage = viewsCount * 100;
