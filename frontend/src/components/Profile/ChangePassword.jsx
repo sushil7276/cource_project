@@ -1,15 +1,37 @@
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Button, Container, Heading, Input, VStack } from '@chakra-ui/react';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { changePassword } from '../../redux/actions/profileAction';
+import { toast } from 'react-hot-toast';
 
 function ChangePassword() {
-  const loading = false;
   const [oldPassword, setOldPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
 
+  const { loading, message, error } = useSelector(state => state.profile);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const submitHandler = e => {
     e.preventDefault();
-    console.log('OldPass');
+
+    dispatch(changePassword(oldPassword, newPassword));
+    navigate('/profile');
   };
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+      dispatch({ type: 'clearError' });
+    }
+
+    if (message) {
+      toast.success(message);
+      dispatch({ type: 'clearMessage' });
+    }
+  }, [dispatch, error, message]);
 
   return (
     <Container py="16" minH={'90vh'}>

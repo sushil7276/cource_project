@@ -99,8 +99,22 @@ function App() {
               }
             />
 
-            <Route path="/updateprofile" element={<UpdateProfile />} />
-            <Route path="/changepassword" element={<ChangePassword />} />
+            <Route
+              path="/updateprofile"
+              element={
+                <ProtectedRoute isAuthenticated={isAuthenticated}>
+                  <UpdateProfile user={user} />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/changepassword"
+              element={
+                <ProtectedRoute isAuthenticated={isAuthenticated}>
+                  <ChangePassword />
+                </ProtectedRoute>
+              }
+            />
 
             {/* Admin Routes */}
             <Route

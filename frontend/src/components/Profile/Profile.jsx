@@ -18,14 +18,20 @@ import {
   useDisclosure,
   VStack,
 } from '@chakra-ui/react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { RiDeleteBin7Fill } from 'react-icons/ri';
 import { Link } from 'react-router-dom';
 import { fileUploadStyle } from '../Auth/Register';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateProfilePicture } from '../../redux/actions/profileAction';
+import { loadUser } from '../../redux/actions/userAction';
+import { toast } from 'react-hot-toast';
 
 function Profile({ user }) {
-  const loading = false;
   const subscriptionLoading = false;
+
+  const { loading, message, error } = useSelector(state => state.profile);
+  const dispatch = useDispatch();
 
   const { isOpen, onClose, onOpen } = useDisclosure();
 
@@ -35,12 +41,28 @@ function Profile({ user }) {
 
   const changeImageSubmitHandler = async (e, image) => {
     e.preventDefault();
-    console.log('Change Image');
+    const myForm = new FormData();
+    myForm.append('file', image);
+
+    await dispatch(updateProfilePicture(myForm));
+    dispatch(loadUser());
   };
 
   const cancelSubscriptionHandler = () => {
     console.log('Cancel subscription');
   };
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+      dispatch({ type: 'clearError' });
+    }
+
+    if (message) {
+      toast.success(message);
+      dispatch({ type: 'clearMessage' });
+    }
+  }, [dispatch, message, error]);
 
   return (
     <Container minH={'95vh'} maxW="container.lg" py="8">

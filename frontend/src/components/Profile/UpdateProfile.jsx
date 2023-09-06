@@ -1,18 +1,22 @@
+import { useDispatch, useSelector } from 'react-redux';
 import { Button, Container, Heading, Input, VStack } from '@chakra-ui/react';
 import React, { useState } from 'react';
+import { updateProfile } from '../../redux/actions/profileAction';
+import { loadUser } from '../../redux/actions/userAction';
 import { useNavigate } from 'react-router-dom';
 
-function UpdateProfile() {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
+function UpdateProfile({ user }) {
+  const [name, setName] = useState(user.name);
+  const [email, setEmail] = useState(user.email);
 
+  const { loading } = useSelector(state => state.profile);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const loading = false;
 
   const submitHandler = async e => {
     e.preventDefault();
-
-    console.log('Update Profile');
+    await dispatch(updateProfile(name, email));
+    dispatch(loadUser());
     navigate('/profile');
   };
 
