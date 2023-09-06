@@ -34,7 +34,7 @@ function App() {
   //   e.preventDefault();  8149414121
   // });
 
-  const { isAuthenticated, user, message, error, loading } = useSelector(
+  const { isAuthenticated, user, message, error, loading, login } = useSelector(
     state => state.user
   );
 
@@ -53,8 +53,10 @@ function App() {
   }, [dispatch, error, message]);
 
   useEffect(() => {
-    dispatch(loadUser());
-  }, [dispatch]);
+    if (login) {
+      dispatch(loadUser());
+    }
+  }, [dispatch, login]);
 
   return (
     <Router>
