@@ -2,26 +2,21 @@ import { server } from '../store';
 import axios from 'axios';
 
 // Update Profile
-export const updateProfile = (name, email) => async dispatch => {
-  try {
-    dispatch({ type: 'updateProfileRequest' });
+export const getAllCourse =
+  (category = '', keyword = '') =>
+  async dispatch => {
+    try {
+      dispatch({ type: 'allCoursesRequest' });
 
-    const { data } = await axios.put(
-      `${server}/updateprofile`,
-      { name, email },
-      {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        withCredentials: true,
-      }
-    );
+      const { data } = await axios.get(
+        `${server}/courses?keyword=${keyword}&category=${category}`
+      );
 
-    dispatch({ type: 'updateProfileSuccess', payload: data.message });
-  } catch (error) {
-    dispatch({
-      type: 'updateProfileFail',
-      payload: error.response.data.message,
-    });
-  }
-};
+      dispatch({ type: 'allCoursesSuccess', payload: data.courses });
+    } catch (error) {
+      dispatch({
+        type: 'allCoursesFail',
+        payload: error.response.data.message,
+      });
+    }
+  };

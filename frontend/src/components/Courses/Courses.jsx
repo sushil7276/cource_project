@@ -1,3 +1,5 @@
+import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-hot-toast';
 import {
   Button,
   Container,
@@ -9,9 +11,9 @@ import {
   Text,
   VStack,
 } from '@chakra-ui/react';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import CImg from '../../assets/images/course.jpg';
+import { getAllCourse } from '../../redux/actions/courseAction';
 
 const CourseCard = ({
   views,
@@ -99,6 +101,17 @@ function Courses() {
     'Game Development',
   ];
 
+  const { loading, courses, error } = useSelector(state => state.courses);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getAllCourse(category, keyword));
+    if (error) {
+      toast.error(error);
+      dispatch({ type: 'clearMessage' });
+    }
+  }, [dispatch, category, keyword, error]);
+
   return (
     <Container minHeight={'95vh'} maxWidth={'container.lg'} paddingY={'8'}>
       <Heading children="All Courses" margin={'8'} />
@@ -124,16 +137,26 @@ function Courses() {
         justifyContent={['flex-start', 'space-evenly']}
         alignItems={['center', 'flex-start']}
       >
-        <CourseCard
-          id={123}
-          title={'Sample'}
-          description={'Sample'}
-          views={23}
-          imageSrc={CImg}
-          creator={'sample Boy'}
-          lectureCount={20}
-          addToPlaylistHandler={addToPlaylistHandler}
-        />
+        {courses.length > 0 ? (
+          courses.map(course => (
+            <>
+              <CourseCard
+                key={course._id}
+                id={course._id}
+                title={course.title}
+                description={course.description}
+                views={course.views}
+                imageSrc={course.poster.url}
+                creator={course.createdBy}
+                lectureCount={course.numOfVideos}
+                addToPlaylistHandler={addToPlaylistHandler}
+                loading={loading}
+              />
+            </>
+          ))
+        ) : (
+          <Heading opacity={0.5} mt="4" children={'No course found'} />
+        )}
       </Stack>
     </Container>
   );

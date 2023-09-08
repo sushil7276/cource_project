@@ -7,6 +7,14 @@ export const courseReducer = createReducer(
       state.loading = true;
     },
 
-    allCoursesSuccess: (state, action) => {},
+    allCoursesSuccess: (state, action) => {
+      state.loading = false;
+      state.courses = action.payload;
+    },
+
+    allCoursesFail: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
   }
 );
