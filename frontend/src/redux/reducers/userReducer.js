@@ -192,6 +192,7 @@ export const profileReducer = createReducer(
 export const subscriptionReducer = createReducer(
   {},
   {
+    // Buy Subscription
     buySubscriptionRequest: state => {
       state.loading = true;
     },
@@ -201,6 +202,21 @@ export const subscriptionReducer = createReducer(
     },
 
     buySubscriptionFail: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+
+    // Cancel Subscription
+    cancelSubscriptionRequest: state => {
+      state.loading = true;
+    },
+
+    cancelSubscriptionSuccess: (state, action) => {
+      state.loading = false;
+      state.message = action.payload;
+    },
+
+    cancelSubscriptionFail: (state, action) => {
       state.loading = false;
       state.error = action.payload;
     },

@@ -27,13 +27,16 @@ import {
   removeFromPlaylist,
   updateProfilePicture,
 } from '../../redux/actions/profileAction';
-import { loadUser } from '../../redux/actions/userAction';
+import { cancelSubscription, loadUser } from '../../redux/actions/userAction';
 import { toast } from 'react-hot-toast';
 
 function Profile({ user }) {
-  const subscriptionLoading = false;
-
   const { loading, message, error } = useSelector(state => state.profile);
+  const {
+    loading: subscriptionLoading,
+    message: subscriptionMessage,
+    error: subscriptionError,
+  } = useSelector(state => state.subscription);
   const dispatch = useDispatch();
 
   const { isOpen, onClose, onOpen } = useDisclosure();
@@ -53,7 +56,7 @@ function Profile({ user }) {
   };
 
   const cancelSubscriptionHandler = () => {
-    console.log('Cancel subscription');
+    dispatch(cancelSubscription());
   };
 
   useEffect(() => {
@@ -66,7 +69,18 @@ function Profile({ user }) {
       toast.success(message);
       dispatch({ type: 'clearMessage' });
     }
-  }, [dispatch, message, error]);
+
+    if (subscriptionError) {
+      toast.error(subscriptionError);
+      dispatch({ type: 'clearError' });
+    }
+
+    if (subscriptionMessage) {
+      toast.success(subscriptionMessage);
+      dispatch({ type: 'clearMessage' });
+      dispatch(loadUser());
+    }
+  }, [dispatch, message, error, subscriptionError, subscriptionMessage]);
 
   return (
     <Container minH={'95vh'} maxW="container.lg" py="8">
