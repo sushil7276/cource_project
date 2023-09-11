@@ -6,13 +6,63 @@ import {
   Text,
   VStack,
 } from '@chakra-ui/react';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { server } from '../../redux/store';
+import { buySubscription } from '../../redux/actions/userAction';
+import toast from 'react-hot-toast';
+import imgLogo from '../../assets/images/logo.png';
 
-function Subscribe() {
-  const loading = false;
+function Subscribe({ user }) {
+  const [key, setKey] = useState('');
+  const dispatch = useDispatch();
+
+  const { loading, subscriptionId, error } = useSelector(
+    state => state.subscription
+  );
 
   const subscribeHandler = async () => {
-    console.log('Subscriber');
+    const {
+      data: { key },
+    } = await axios.get(`${server}/razorpaykey`);
+    setKey(key);
+    dispatch(buySubscription());
   };
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+      dispatch({ type: 'clearErrors' });
+    }
+
+    if (subscriptionId) {
+      const openPopUp = () => {
+        const option = {
+          key,
+          name: 'CourseBundler',
+          description: 'Get access to all premium content',
+          image: imgLogo,
+          subscription_id: subscriptionId,
+          callback_url: `${server}/paymentverification`,
+          prefill: {
+            name: user.name,
+            email: user.email,
+            contact: '',
+          },
+          notes: {
+            address: 'Sushil Babar',
+          },
+          theme: {
+            color: '#FFC800',
+          },
+        };
+        const razor = new window.Razorpay(option);
+        razor.open();
+      };
+      openPopUp();
+    }
+  }, [dispatch, error, key, subscriptionId, user.name, user.email]);
 
   return (
     <Container h="90vh" p="16">
