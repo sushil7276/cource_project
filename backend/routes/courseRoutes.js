@@ -12,7 +12,7 @@ import {
   authorizeAdmin,
   authorizeSubscriber,
   isAuthentication,
-} from "../middlewares/Auth.js";
+} from "../middlewares/auth.js";
 
 const router = express.Router();
 

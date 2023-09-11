@@ -16,7 +16,7 @@ import {
   updateProfilePic,
   updateUserRole,
 } from "../controllers/userController.js";
-import { authorizeAdmin, isAuthentication } from "../middlewares/Auth.js";
+import { authorizeAdmin, isAuthentication } from "../middlewares/auth.js";
 import singleUpload from "../middlewares/multer.js";
 
 const router = express.Router();

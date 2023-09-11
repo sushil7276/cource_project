@@ -2,7 +2,7 @@ import { server } from '../store';
 import axios from 'axios';
 
 // Get All Course
-export const getAllCourse =
+export const getAllCourses =
   (category = '', keyword = '') =>
   async dispatch => {
     try {

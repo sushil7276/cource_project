@@ -13,9 +13,11 @@ import {
 } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { getAllCourse } from '../../redux/actions/courseAction';
+import { getAllCourses } from '../../redux/actions/courseAction';
+import { addToPlaylist } from '../../redux/actions/profileAction';
+import { loadUser } from '../../redux/actions/userAction';
 
-const CourseCard = ({
+const Course = ({
   views,
   title,
   imageSrc,
@@ -44,12 +46,7 @@ const CourseCard = ({
           <Text
             fontWeight={'bold'}
             textTransform={'uppercase'}
-            children={'Creator'}
-          />
-          <Text
-            fontFamily={'body'}
-            textTransform={'uppercase'}
-            children={creator}
+            children={`Creator - ${creator}`}
           />
         </HStack>
 
@@ -87,9 +84,15 @@ const CourseCard = ({
 function Courses() {
   const [keyword, setKeyword] = useState('');
   const [category, setCategory] = useState('');
+  const dispatch = useDispatch();
 
-  const addToPlaylistHandler = async couseId => {
-    alert('Playlist add');
+  const { loading, courses, error, message } = useSelector(
+    state => state.courses
+  );
+
+  const addToPlaylistHandler = async courseId => {
+    await dispatch(addToPlaylist(courseId));
+    dispatch(loadUser());
   };
 
   const categories = [
@@ -101,16 +104,19 @@ function Courses() {
     'Game Development',
   ];
 
-  const { loading, courses, error } = useSelector(state => state.courses);
-  const dispatch = useDispatch();
-
   useEffect(() => {
-    dispatch(getAllCourse(category, keyword));
+    dispatch(getAllCourses(category, keyword));
+
     if (error) {
       toast.error(error);
+      dispatch({ type: 'clearError' });
+    }
+
+    if (message) {
+      toast.success(message);
       dispatch({ type: 'clearMessage' });
     }
-  }, [dispatch, category, keyword, error]);
+  }, [category, keyword, dispatch, error, message]);
 
   return (
     <Container minHeight={'95vh'} maxWidth={'container.lg'} paddingY={'8'}>
@@ -138,24 +144,22 @@ function Courses() {
         alignItems={['center', 'flex-start']}
       >
         {courses.length > 0 ? (
-          courses.map(course => (
-            <>
-              <CourseCard
-                key={course._id}
-                id={course._id}
-                title={course.title}
-                description={course.description}
-                views={course.views}
-                imageSrc={course.poster.url}
-                creator={course.createdBy}
-                lectureCount={course.numOfVideos}
-                addToPlaylistHandler={addToPlaylistHandler}
-                loading={loading}
-              />
-            </>
+          courses.map(item => (
+            <Course
+              key={item._id}
+              title={item.title}
+              description={item.description}
+              views={item.views}
+              imageSrc={item.poster.url}
+              id={item._id}
+              creator={item.createdBy}
+              lectureCount={item.numOfVideos}
+              addToPlaylistHandler={addToPlaylistHandler}
+              loading={loading}
+            />
           ))
         ) : (
-          <Heading opacity={0.5} mt="4" children={'No course found'} />
+          <Heading mt="4" children="Courses Not Found" />
         )}
       </Stack>
     </Container>

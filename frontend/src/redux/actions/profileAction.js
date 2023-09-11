@@ -127,16 +127,21 @@ export const resetPassword = (token, password) => async dispatch => {
 };
 
 // Add To Playlist
-export const addToPlaylist = courseId => async dispatch => {
+export const addToPlaylist = id => async dispatch => {
   try {
     dispatch({ type: 'addToPlaylistRequest' });
 
-    const { data } = await axios.post(`${server}/addtoplaylist`, courseId, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      withCredentials: true,
-    });
+    const { data } = await axios.post(
+      `${server}/addtoplaylist`,
+      { id },
+      {
+        headers: {
+          'Content-type': 'application/json',
+        },
+
+        withCredentials: true,
+      }
+    );
 
     dispatch({ type: 'addToPlaylistSuccess', payload: data.message });
   } catch (error) {

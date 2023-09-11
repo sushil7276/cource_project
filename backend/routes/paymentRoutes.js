@@ -1,5 +1,5 @@
 import express from "express";
-import { isAuthentication } from "../middlewares/Auth.js";
+import { isAuthentication } from "../middlewares/auth.js";
 import {
   buySubscription,
   cancelSubscription,
