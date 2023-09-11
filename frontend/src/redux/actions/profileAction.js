@@ -125,3 +125,45 @@ export const resetPassword = (token, password) => async dispatch => {
     });
   }
 };
+
+// Add To Playlist
+export const addToPlaylist = courseId => async dispatch => {
+  try {
+    dispatch({ type: 'addToPlaylistRequest' });
+
+    const { data } = await axios.post(`${server}/addtoplaylist`, courseId, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      withCredentials: true,
+    });
+
+    dispatch({ type: 'addToPlaylistSuccess', payload: data.message });
+  } catch (error) {
+    dispatch({
+      type: 'addToPlaylistFail',
+      payload: error.response.data.message,
+    });
+  }
+};
+
+// Remove From Playlist
+export const removeFromPlaylist = courseId => async dispatch => {
+  try {
+    dispatch({ type: 'removeFromPlaylistRequest' });
+
+    const { data } = await axios.delete(
+      `${server}/removefromplaylist?id=${courseId}`,
+      {
+        withCredentials: true,
+      }
+    );
+
+    dispatch({ type: 'removeFromPlaylistSuccess', payload: data.message });
+  } catch (error) {
+    dispatch({
+      type: 'removeFromPlaylistFail',
+      payload: error.response.data.message,
+    });
+  }
+};
