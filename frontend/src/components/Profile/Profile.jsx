@@ -23,7 +23,10 @@ import { RiDeleteBin7Fill } from 'react-icons/ri';
 import { Link } from 'react-router-dom';
 import { fileUploadStyle } from '../Auth/Register';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateProfilePicture } from '../../redux/actions/profileAction';
+import {
+  removeFromPlaylist,
+  updateProfilePicture,
+} from '../../redux/actions/profileAction';
 import { loadUser } from '../../redux/actions/userAction';
 import { toast } from 'react-hot-toast';
 
@@ -36,7 +39,8 @@ function Profile({ user }) {
   const { isOpen, onClose, onOpen } = useDisclosure();
 
   const removeFromPlaylistHandler = async id => {
-    console.log('remove playlist');
+    await dispatch(removeFromPlaylist(id));
+    dispatch(loadUser());
   };
 
   const changeImageSubmitHandler = async (e, image) => {
