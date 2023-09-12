@@ -1,3 +1,4 @@
+import { useDispatch } from 'react-redux';
 import {
   Box,
   Button,
@@ -15,33 +16,25 @@ import {
   Tr,
   useDisclosure,
 } from '@chakra-ui/react';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { RiDeleteBin7Fill } from 'react-icons/ri';
 import cursor from '../../assets/images/cursor.png';
 import Sidebar from './Sidebar';
 import CourseModal from './CourseModal.jsx';
 import poster from '../../assets/images/course.jpg';
+import { useSelector } from 'react-redux';
+import { getAllCourses } from '../../redux/actions/courseAction';
 
 function AdminCourses() {
   const loading = false;
-  const courses = [
-    {
-      _id: 'adasdad',
-      title: 'React Course',
-      category: 'Web Development',
-      poster: {
-        url: poster,
-      },
-      createdBy: 'Sushil',
-      views: 123,
-      numOfVideos: 12,
-    },
-  ];
 
   const { isOpen, onClose, onOpen } = useDisclosure();
 
   const [courseId, setCourseId] = useState('');
   const [courseTitle, setCourseTitle] = useState('');
+
+  const dispatch = useDispatch();
+  const { courses } = useSelector(state => state.courses);
 
   const courseDetailsHandler = (courseId, title) => {
     onOpen();
@@ -66,6 +59,10 @@ function AdminCourses() {
 
     console.log(myForm);
   };
+
+  useEffect(() => {
+    dispatch(getAllCourses());
+  }, [dispatch]);
 
   return (
     <Grid
