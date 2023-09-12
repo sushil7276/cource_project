@@ -18,16 +18,16 @@ export const courseReducer = createReducer(
       state.error = action.payload;
     },
 
-    // Add To Playlist
-    getCourseRequest: state => {
+    // Get All Lectures
+    getCourseLecturesRequest: state => {
       state.loading = true;
     },
-    getCourseSuccess: (state, action) => {
+    getCourseLecturesSuccess: (state, action) => {
       state.loading = false;
       state.lectures = action.payload;
     },
 
-    getCourseFail: (state, action) => {
+    getCourseLecturesFail: (state, action) => {
       state.loading = false;
       state.error = action.payload;
     },
