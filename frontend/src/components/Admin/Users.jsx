@@ -23,7 +23,7 @@ import { getAllUsers } from '../../redux/actions/adminAction';
 import Loader from '../Layout/Loader/Loader';
 
 function Users() {
-  const { users, loading, error } = useSelector(state => state.admin);
+  const { users, loading, error, message } = useSelector(state => state.admin);
   const dispatch = useDispatch();
 
   const updateHandler = userId => {
@@ -40,8 +40,13 @@ function Users() {
       dispatch({ type: 'clearError' });
     }
 
+    if (message) {
+      toast.success(message);
+      dispatch({ type: 'clearMessage' });
+    }
+
     dispatch(getAllUsers());
-  }, [dispatch, error]);
+  }, [dispatch, error, message]);
 
   return (
     <Grid
@@ -52,7 +57,7 @@ function Users() {
       templateColumns={['1fr', '5fr 1fr']}
     >
       {loading ? (
-        <Loader />
+        <Loader color="purple.500" />
       ) : (
         <Box p={['0', '16']} overflowX="auto">
           <Heading

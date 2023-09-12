@@ -98,3 +98,39 @@ export const getAllUsers = () => async dispatch => {
     });
   }
 };
+
+// Delete User
+export const deleteUser = id => async dispatch => {
+  try {
+    dispatch({ type: 'deleteUserRequest' });
+
+    const { data } = await axios.get(`${server}/admin/user/${id}`, {
+      withCredentials: true,
+    });
+
+    dispatch({ type: 'deleteUserSuccess', payload: data.message });
+  } catch (error) {
+    dispatch({
+      type: 'deleteUserFail',
+      payload: error.response.data.message,
+    });
+  }
+};
+
+// Update User Role
+export const updateUserRole = id => async dispatch => {
+  try {
+    dispatch({ type: 'UpdateUserRoleRequest' });
+
+    const { data } = await axios.get(`${server}/admin/user/${id}`, {
+      withCredentials: true,
+    });
+
+    dispatch({ type: 'UpdateUserRoleSuccess', payload: data.message });
+  } catch (error) {
+    dispatch({
+      type: 'UpdateUserRoleFail',
+      payload: error.response.data.message,
+    });
+  }
+};
