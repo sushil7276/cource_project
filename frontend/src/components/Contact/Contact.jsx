@@ -1,3 +1,4 @@
+import { useDispatch, useSelector } from 'react-redux';
 import {
   Box,
   Button,
@@ -8,21 +9,36 @@ import {
   Textarea,
   VStack,
 } from '@chakra-ui/react';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { contactUS } from '../../redux/actions/otherAction';
+import toast from 'react-hot-toast';
 
 function Contact() {
-  const loading = false;
-
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
 
+  const dispatch = useDispatch();
+  const { loading, error, message: msg } = useSelector(state => state.other);
+
   const submitHandler = e => {
     e.preventDefault();
-    alert('contact');
+    dispatch(contactUS(name, email, message));
   };
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+      dispatch({ type: 'clearError' });
+    }
+
+    if (msg) {
+      toast.success(msg);
+      dispatch({ type: 'clearMessage' });
+    }
+  }, [dispatch, error, msg]);
 
   return (
     <Container h="92vh">

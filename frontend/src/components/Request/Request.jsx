@@ -8,21 +8,37 @@ import {
   Textarea,
   VStack,
 } from '@chakra-ui/react';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { courseRequest } from '../../redux/actions/otherAction';
+import toast from 'react-hot-toast';
 
 function Request() {
-  const loading = false;
-
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [course, setCourse] = useState('');
 
+  const dispatch = useDispatch();
+  const { loading, error, message } = useSelector(state => state.other);
+
   const submitHandler = e => {
     e.preventDefault();
-    alert('contact request');
+    dispatch(courseRequest(name, email, course));
   };
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+      dispatch({ type: 'clearError' });
+    }
+
+    if (message) {
+      toast.success(message);
+      dispatch({ type: 'clearMessage' });
+    }
+  }, [dispatch, error, message]);
 
   return (
     <Container h="92vh">

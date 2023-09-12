@@ -3,7 +3,7 @@ import { createTransport } from "nodemailer";
 export const sendEmail = async (to, subject, text) => {
   // Using "MailTrap" for sending mail
 
-  const transporter = createTransport({
+  const transport = createTransport({
     host: process.env.SMTP_HOST,
     port: process.env.SMTP_PORT,
     auth: {
@@ -12,7 +12,7 @@ export const sendEmail = async (to, subject, text) => {
     },
   });
 
-  await transporter.sendMail({
+  await transport.sendMail({
     to,
     subject,
     text,
