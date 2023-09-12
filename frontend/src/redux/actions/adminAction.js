@@ -80,3 +80,21 @@ export const deleteLecture = (courseId, lectureId) => async dispatch => {
     });
   }
 };
+
+// Get All Users
+export const getAllUsers = () => async dispatch => {
+  try {
+    dispatch({ type: 'getAllUsersRequest' });
+
+    const { data } = await axios.get(`${server}/admin/users`, {
+      withCredentials: true,
+    });
+
+    dispatch({ type: 'getAllUsersSuccess', payload: data.message });
+  } catch (error) {
+    dispatch({
+      type: 'getAllUsersFail',
+      payload: error.response.data.message,
+    });
+  }
+};
