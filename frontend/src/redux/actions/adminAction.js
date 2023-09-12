@@ -104,7 +104,7 @@ export const deleteUser = id => async dispatch => {
   try {
     dispatch({ type: 'deleteUserRequest' });
 
-    const { data } = await axios.get(`${server}/admin/user/${id}`, {
+    const { data } = await axios.delete(`${server}/admin/user/${id}`, {
       withCredentials: true,
     });
 
@@ -122,9 +122,13 @@ export const updateUserRole = id => async dispatch => {
   try {
     dispatch({ type: 'UpdateUserRoleRequest' });
 
-    const { data } = await axios.get(`${server}/admin/user/${id}`, {
-      withCredentials: true,
-    });
+    const { data } = await axios.put(
+      `${server}/admin/user/${id}`,
+      {},
+      {
+        withCredentials: true,
+      }
+    );
 
     dispatch({ type: 'UpdateUserRoleSuccess', payload: data.message });
   } catch (error) {
