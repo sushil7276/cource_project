@@ -22,24 +22,29 @@ import cursor from '../../assets/images/cursor.png';
 import Sidebar from './Sidebar';
 import CourseModal from './CourseModal.jsx';
 import { useSelector } from 'react-redux';
-import { getAllCourses } from '../../redux/actions/courseAction';
+import {
+  getAllCourses,
+  getCourseLectures,
+} from '../../redux/actions/courseAction';
+import { addLecture } from '../../redux/actions/adminAction';
+import toast from 'react-hot-toast';
 
 function AdminCourses() {
-  const loading = false;
-
   const { isOpen, onClose, onOpen } = useDisclosure();
 
   const [courseId, setCourseId] = useState('');
   const [courseTitle, setCourseTitle] = useState('');
 
   const dispatch = useDispatch();
-  const { courses } = useSelector(state => state.courses);
+  const { courses, lectures } = useSelector(state => state.courses);
+  const { loading, message, error } = useSelector(state => state.admin);
 
   const courseDetailsHandler = (courseId, title) => {
     onOpen();
     setCourseId(courseId);
     setCourseTitle(title);
   };
+
   const deleteButtonHandler = courseId => {
     console.log(courseId);
   };
@@ -56,12 +61,23 @@ function AdminCourses() {
     myForm.append('description', description);
     myForm.append('file', video);
 
-    console.log(myForm);
+    await dispatch(addLecture(courseId, myForm));
+    dispatch(getCourseLectures(courseId));
   };
 
   useEffect(() => {
+    if (error) {
+      toast.error(error);
+      dispatch({ type: 'clearErrors' });
+    }
+
+    if (message) {
+      toast.success(message);
+      dispatch({ type: 'clearMessage' });
+    }
+
     dispatch(getAllCourses());
-  }, [dispatch]);
+  }, [dispatch, error, message]);
 
   return (
     <Grid
@@ -117,6 +133,7 @@ function AdminCourses() {
           courseTitle={courseTitle}
           deleteButtonHandler={deleteLectureButtonHandler}
           addLectureHandler={addLectureHandler}
+          lectures={lectures}
           loading={loading}
         />
       </Box>

@@ -15,10 +15,12 @@ import {
   Text,
   VStack,
 } from '@chakra-ui/react';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { RiDeleteBin7Fill } from 'react-icons/ri';
 import { fileUploadCss } from '../Auth/Register';
+import { useDispatch } from 'react-redux';
+import { getCourseLectures } from '../../redux/actions/courseAction';
 
 function CourseModal({
   isOpen,
@@ -34,6 +36,8 @@ function CourseModal({
   const [description, setDescription] = useState('');
   const [video, setVideo] = useState('');
   const [videoPrev, setVideoPrev] = useState('');
+
+  const dispatch = useDispatch();
 
   // Image upload
   const changeVideoHandler = e => {
@@ -55,6 +59,10 @@ function CourseModal({
     setVideoPrev('');
     onClose();
   };
+
+  useEffect(() => {
+    dispatch(getCourseLectures(id));
+  }, [dispatch, id]);
 
   return (
     <Modal
@@ -78,16 +86,19 @@ function CourseModal({
               </Box>
 
               <Heading children={'Lectures'} size="lg" />
-
-              <VideoCard
-                title="React App"
-                description="This is react tutorial"
-                num={1}
-                lectureId="asdasdasd123"
-                courseId={id}
-                deleteButtonHandler={deleteButtonHandler}
-                loading={loading}
-              />
+              {lectures &&
+                lectures.map((item, i) => (
+                  <VideoCard
+                    key={i}
+                    title={item.title}
+                    description={item.description}
+                    num={i + 1}
+                    lectureId={item._id}
+                    courseId={id}
+                    deleteButtonHandler={deleteButtonHandler}
+                    loading={loading}
+                  />
+                ))}
             </Box>
 
             <Box>
