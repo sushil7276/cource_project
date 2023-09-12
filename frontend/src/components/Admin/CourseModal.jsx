@@ -15,12 +15,9 @@ import {
   Text,
   VStack,
 } from '@chakra-ui/react';
-import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { RiDeleteBin7Fill } from 'react-icons/ri';
 import { fileUploadCss } from '../Auth/Register';
-import { useDispatch } from 'react-redux';
-import { getCourseLectures } from '../../redux/actions/courseAction';
 
 function CourseModal({
   isOpen,
@@ -36,8 +33,6 @@ function CourseModal({
   const [description, setDescription] = useState('');
   const [video, setVideo] = useState('');
   const [videoPrev, setVideoPrev] = useState('');
-
-  const dispatch = useDispatch();
 
   // Image upload
   const changeVideoHandler = e => {
@@ -59,10 +54,6 @@ function CourseModal({
     setVideoPrev('');
     onClose();
   };
-
-  useEffect(() => {
-    dispatch(getCourseLectures(id));
-  }, [dispatch, id]);
 
   return (
     <Modal
