@@ -21,7 +21,6 @@ import { RiDeleteBin7Fill } from 'react-icons/ri';
 import cursor from '../../assets/images/cursor.png';
 import Sidebar from './Sidebar';
 import CourseModal from './CourseModal.jsx';
-import poster from '../../assets/images/course.jpg';
 import { useSelector } from 'react-redux';
 import { getAllCourses } from '../../redux/actions/courseAction';
 
