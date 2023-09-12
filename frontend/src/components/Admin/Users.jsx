@@ -16,35 +16,14 @@ import {
 import { RiDeleteBin7Fill } from 'react-icons/ri';
 import cursor from '../../assets/images/cursor.png';
 import Sidebar from './Sidebar';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import toast from 'react-hot-toast';
+import { getAllUsers } from '../../redux/actions/adminAction';
 
 function Users() {
-  const loading = false;
-
-  const users = [
-    {
-      _id: '123123asdad123123',
-      name: 'Sushil',
-      email: 's@gmail.com',
-      createdAt: String(new Date().toISOString()),
-      subscription: {
-        status: 'active',
-      },
-      role: 'user',
-      avatar: {
-        url: 'asdasd',
-      },
-    },
-    {
-      _id: '123123asdad',
-      name: 'Sushil',
-      email: 's@gmail.com',
-      createdAt: String(new Date().toISOString()),
-      subscription: {
-        status: 'Not active',
-      },
-      role: 'user',
-    },
-  ];
+  const { users, loading, error } = useSelector(state => state.admin);
+  const dispatch = useDispatch();
 
   const updateHandler = userId => {
     console.log('Update User', userId);
@@ -53,6 +32,15 @@ function Users() {
   const deleteButtonHandler = userId => {
     console.log('Delete User', userId);
   };
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+      dispatch({ type: 'clearError' });
+    }
+
+    dispatch(getAllUsers());
+  }, [dispatch, error]);
 
   return (
     <Grid

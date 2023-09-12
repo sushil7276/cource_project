@@ -90,7 +90,7 @@ export const getAllUsers = () => async dispatch => {
       withCredentials: true,
     });
 
-    dispatch({ type: 'getAllUsersSuccess', payload: data.message });
+    dispatch({ type: 'getAllUsersSuccess', payload: data.users });
   } catch (error) {
     dispatch({
       type: 'getAllUsersFail',
