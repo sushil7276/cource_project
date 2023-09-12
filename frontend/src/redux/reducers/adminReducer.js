@@ -4,11 +4,11 @@ export const adminReducer = createReducer(
   {},
   {
     // Get Admin Stats
-    GetAdminStatsRequest: state => {
+    getAdminStatsRequest: state => {
       state.loading = true;
     },
 
-    GetAdminStatsSuccess: (state, action) => {
+    getAdminStatsSuccess: (state, action) => {
       state.loading = false;
       state.stats = action.payload.stats;
       state.usersCount = action.payload.usersCount;
@@ -22,7 +22,7 @@ export const adminReducer = createReducer(
       state.subscriptionProfit = action.payload.subscriptionProfit;
     },
 
-    GetAdminStatsFail: (state, action) => {
+    getAdminStatsFail: (state, action) => {
       state.loading = false;
       state.error = action.payload;
     },
