@@ -6,22 +6,27 @@ import {
   Image,
   Input,
   Select,
+  Text,
   VStack,
 } from '@chakra-ui/react';
 import cursor from '../../assets/images/cursor.png';
 import Sidebar from './Sidebar';
 import { fileUploadCss } from '../Auth/Register';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import toast from 'react-hot-toast';
+import { createCourse } from '../../redux/actions/adminAction';
 
 function CreateCourse() {
-  const loading = false;
-
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [createdBy, setCreatedBy] = useState('');
   const [category, setCategory] = useState('');
   const [image, setImage] = useState('');
   const [imagePrev, setImagePrev] = useState('');
+
+  const dispatch = useDispatch();
+  const { loading, message, error } = useSelector(state => state.admin);
 
   const categories = [
     'Web development',
@@ -52,8 +57,21 @@ function CreateCourse() {
     myForm.append('category', category);
     myForm.append('createdBy', createdBy);
     myForm.append('file', image);
-    console.log(myForm);
+
+    dispatch(createCourse(myForm));
   };
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+      dispatch({ type: 'clearErrors' });
+    }
+
+    if (message) {
+      toast.success(message);
+      dispatch({ type: 'clearMessage' });
+    }
+  }, [dispatch, error, message]);
 
   return (
     <Grid
@@ -107,6 +125,7 @@ function CreateCourse() {
                 </option>
               ))}
             </Select>
+            <Text children={' only Image File'} />
             <Input
               accept="image/*"
               required

@@ -5,6 +5,7 @@ import {
   userReducer,
 } from './reducers/userReducer';
 import { courseReducer } from './reducers/courseReducer';
+import { adminReducer } from './reducers/adminReducer';
 
 export const server = 'http://localhost:4000/api/v1';
 
@@ -14,6 +15,7 @@ const store = configureStore({
     profile: profileReducer,
     courses: courseReducer,
     subscription: subscriptionReducer,
+    admin: adminReducer,
   },
 });
 
