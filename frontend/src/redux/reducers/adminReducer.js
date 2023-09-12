@@ -18,6 +18,21 @@ export const adminReducer = createReducer(
       state.error = action.payload;
     },
 
+    // delete Course
+    deleteCourseRequest: state => {
+      state.loading = true;
+    },
+
+    deleteCourseSuccess: (state, action) => {
+      state.loading = false;
+      state.message = action.payload;
+    },
+
+    deleteCourseFail: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+
     // Add Lecture
     addLectureRequest: state => {
       state.loading = true;
