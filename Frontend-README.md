@@ -1,7 +1,7 @@
 
 
->     FOLDER STRUCTURE
-> **Frotend**
+>  **FOLDER STRUCTURE**
+> `Frontend`
 
 ## Assets
 
