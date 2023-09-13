@@ -120,21 +120,24 @@
 
 > `Middlewares`
 > > 
-> ***Auth***
-> **IsAuthenticated** To make APIs accessible by logged in User 
-> **AuthorizeSubscribers** To make APIs accessible only by Subscribers 
-> **AuthorizeAdmin** To make APIs accessible only by Admin
-> 
->  ***CatchAsyncError***
-> **CatchAsyncError** To use API in the try-catch block
-> 
-> ***Multer***
-> **SingleUpload** To get access to req.file
-> 
-> ***Error***
+***Auth***
+ - **IsAuthenticated** To make APIs accessible by logged in User 
+ - **AuthorizeSubscribers** To make APIs accessible only by Subscribers 
+ -  **AuthorizeAdmin** To make APIs accessible only by Admin
+
+
+ ***CatchAsyncError***
+>   **CatchAsyncError** To use API in the try-catch block
+
+ ***Multer***
+
+>  **SingleUpload** To get access to req.file
+ 
+***Error***
 > **ErrorMiddleware** Custom error handling middleware
  
-> `UTILS`
+
+ `UTILS`
 > 
 > ***DataURI*** 
 > **GetDataUri** To get the uri of the file received from req.file
