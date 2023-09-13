@@ -8,7 +8,7 @@ import { courseReducer } from './reducers/courseReducer';
 import { adminReducer } from './reducers/adminReducer';
 import { otherReducer } from './reducers/otherReducer';
 
-export const server = 'http://localhost:4000/api/v1';
+export const server = 'https://cource-project-six.vercel.app/api/v1';
 
 const store = configureStore({
   reducer: {
