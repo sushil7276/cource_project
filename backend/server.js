@@ -24,20 +24,14 @@ config({
   path: "./config/config.env",
 });
 
-// node-corn call 1st of every month
-nodeCron.schedule("0 0 0 1 * *", async () => {
+// node-corn call 5th of every month
+nodeCron.schedule("0 0 0 5 * *", async () => {
   try {
     await Stats.create({});
-  } catch (err) {
-    console.log(err);
+  } catch (error) {
+    console.log(error);
   }
 });
-
-const temp = async () => {
-  await Stats.create({});
-};
-
-temp();
 
 app.listen(process.env.PORT, () => {
   console.log(`server started on Port: ${process.env.PORT}`);
