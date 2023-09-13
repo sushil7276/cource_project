@@ -7,14 +7,14 @@
 ## Config
 
  - **Config.env** 		config files to store all env variables     
- - **Database.js** 	database file contain connectDB function to connect database
+ - **Database.js** 	database file contains connectDB function to connect the database
 
 ## Controllers
 
  - **CourseController.js** 		contains all controllers related to the course & watcher 
  -  **UserController.js** 			contains all controllers related to the user & watcher 
  - **PaymentController.js** 	contains all controllers related to the payment & subscription 
- - **OtherController.js** 		contains remaing controllers like contact , course request, dashboardstats.
+ - **OtherController.js** 		contains remaining controllers like contact, course request, dashboardstats.
 
 ## Middlewares
 
@@ -25,7 +25,7 @@
 
 ## Routes
 
- - **CourseRoutes.js** routes related to course 
+ - **CourseRoutes.js** routes related to the course 
  - **PaymentRoutes.js** routes related to payment  
  - **OtherRoutes.js** remaining routes  
  - **UserRoutes.js** routes related to user
@@ -60,7 +60,7 @@
 ## SEVER
 
  - **Cloudinary** Set Cloudinary configuration 
- - **Razorpay** Create instance of Razorpay 
+ - **Razorpay** Create an instance of Razorpay 
  - **ConnectDB** Connect database 
  - **NodeCron** Set a schedule to create new Stat each month 
  - **Listen** Listen to a port
@@ -68,7 +68,7 @@
 ## APP
 
  - **Config** configure dotenv 
- - **UseMiddlewares** express.json, expres.urlencoded, cookieParser, cors, ErrorMiddleware 
+ - **UseMiddlewares** express.json, express.urlencoded, cookieParser, cors, ErrorMiddleware 
  - **UseRoutes** user, course, payment, other
 
 **
@@ -83,10 +83,10 @@
  - **Login** To login 
  - **Logout** To logout 
  - **UpdateProfile** To update name & email 
- - **UpdateProfilePicture** To change profile photo 
+ - **UpdateProfilePicture** To change the profile photo 
  - **ChangePassword** To change password 
  - **ForgetPassword** To send reset password link 
- - **ResetPassword** To reset password with token 
+ - **ResetPassword** To reset the password with a token 
  - **AddToPlaylist** To add a course to the playlist 
  - **RemoveFromPlaylist** To remove a course from the playlist 
  - **UpdateUserRole** To change user to admin 
@@ -99,15 +99,15 @@
 
  - **CreateCourse** To create a new course 
  - **GetAllCourses** To get all courses 
- - **AddLectures** To add lecture in course 
- - **GetCourseLectures** To lectures of a course 
- - **DeleteLecture** To delete lecture in course 
- - **DeleteCourse** To delete Course in course
+ - **AddLectures** To add lectures in course 
+ - **GetCourseLectures** To lectures on a course 
+ - **DeleteLecture** To delete a lecture in the course 
+ - **DeleteCourse** To delete a Course in the course
 
 ## Payment
 
  - **BuySubscription** To create/start a subscription 
- - **PaymentVerification** This is the callback api to verify payment & save in database 
+ - **PaymentVerification** This is the callback API to verify payment & save it in database 
  - **GetRazorPayKey** To get RazorPay API key 
  - **CancelSubscription** To Subscription of a user
 
@@ -126,7 +126,7 @@
 > **AuthorizeAdmin** To make APIs accessible only by Admin
 > 
 >  ***CatchAsyncError***
-> **CatchAsyncError** To use API in try-catch block
+> **CatchAsyncError** To use API in the try-catch block
 > 
 > ***Multer***
 > **SingleUpload** To get access to req.file
@@ -137,16 +137,16 @@
 > `UTILS`
 > 
 > ***DataURI*** 
-> **GetDataUri** To get uri of file received from req.file
+> **GetDataUri** To get the uri of the file received from req.file
 > 
 > ***ErrorHandler*** 
-> **ErrorHandler** Creating a custom error class extended from default error class 
+> **ErrorHandler** Creating a custom error class extended from the default error class 
 > 
 > ***SendEmail*** 
 > **SendEmail** Function to send email using nodemailer 
 > 
 > ***SendToken*** 
-> **SendToken** Function to set cookie in header
+> **SendToken** Function to set a cookie in the header
 
 ## MODELS
 
@@ -163,10 +163,10 @@
 > **ResetPasswordExpire** type
 > 
 > `User Methods`
-**PreSave** hash password before saving user 
+**PreSave** hash password before saving the user 
 **GetJWTToken** To generate jwt token 
 **ComparePassword** To compare hashed password and given password 
-**GetResetToken** To generate token for resetting password
+**GetResetToken** To generate a token for resetting the password
 > 
 > `Course`
 **Title** type, required, minLength, maxLength 
@@ -194,7 +194,7 @@
 ## CONFIG VARIABLE
 
  - **PORT** Port to listen 
- - **PLAN_ID** Subscription plan id created from razorpay 
+ - **PLAN_ID** Subscription plan ID created from Razorpay 
  - **RAZORPAY_API_KEY** Razorpay API key 
  - **RAZORPAY_API_SECRET** Razorpay API Secret 
  - **JWT_SECRET** any random secret for jwt 
@@ -203,7 +203,7 @@
  - **CLOUDINARY_CLIENT_NAME** Cloudinary username 
  - **CLOUDINARY_CLIENT_API** Cloudinary API key 
  - **CLOUDINARY_CLIENT_SECRET** Cloudinary API secret 
- - **RESET_PASSWORD_SECRET** any random secret for password token 
+ - **RESET_PASSWORD_SECRET** any random secret for the password token 
  - **SMTP_HOST** Email service host
  - **SMTP_PORT** Email service port 
  - **SMTP_USER** Email service userId 
