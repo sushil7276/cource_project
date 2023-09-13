@@ -118,15 +118,16 @@ function AdminCourses() {
             </Thead>
 
             <Tbody>
-              {courses.map(item => (
-                <Row
-                  courseDetailsHandler={courseDetailsHandler}
-                  deleteButtonHandler={deleteButtonHandler}
-                  key={item._id}
-                  item={item}
-                  loading={loading}
-                />
-              ))}
+              {courses &&
+                courses.map(item => (
+                  <Row
+                    courseDetailsHandler={courseDetailsHandler}
+                    deleteButtonHandler={deleteButtonHandler}
+                    key={item._id}
+                    item={item}
+                    loading={loading}
+                  />
+                ))}
             </Tbody>
           </Table>
         </TableContainer>

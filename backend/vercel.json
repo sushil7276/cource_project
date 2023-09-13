@@ -2,5 +2,13 @@
   "version": 2,
   "name": "native-server",
   "builds": [{ "src": "server.js", "use": "@vercel/node" }],
-  "routes": [{ "src": "/(.*)", "dest": "/server.js" }]
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/server.js",
+      "headers": {
+        "Access-Control-Allow-Origin": "*"
+      }
+    }
+  ]
 }
