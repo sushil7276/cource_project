@@ -1,13 +1,15 @@
 
 
->  **FOLDER STRUCTURE**
+> FOLDER STRUCTURE
+> 
 > `Frontend`
+> 
 
 ## Assets
 
  - **Docs** contains terms and condition 
  - **Images** contains website images
- - **Videos** contains video for website
+ - **Videos** contains video for the website
 
 ## Components
 
