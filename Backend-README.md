@@ -1,6 +1,6 @@
     
 
-> FOLDER STRUCTURE
+> **FOLDER STRUCTURE**
 > 
 > `Backend`
 > 
