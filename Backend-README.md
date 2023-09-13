@@ -155,46 +155,52 @@
 
 ## MODELS
 
-> `User`
-> **Name** type, required 
-> **Email** type, required, unique, validate 
-> **Password** type, required, minLength, select 
-> **Role** type, enum, default 
-> **Subscription** id, status 
-> **Avatar** public_id, url 
-> **Playlist** [ courseId,poster ] 
-> **CreatedAt** type, default 
-> **ResetPasswordToken** type 
-> **ResetPasswordExpire** type
+`User`
+
+ - > **Name** type, required 
+ - > **Email** type, required, unique, validate 
+ - > **Password** type, required, minLength, select 
+ - > **Role** type, enum, default 
+ - > **Subscription** id, status 
+ - > **Avatar** public_id, url 
+ - > **Playlist** [ courseId,poster ] 
+ - > **CreatedAt** type, default 
+ - > **ResetPasswordToken** type 
+ - > **ResetPasswordExpire** type
+
 > 
-> `User Methods`
-**PreSave** hash password before saving the user 
-**GetJWTToken** To generate jwt token 
-**ComparePassword** To compare hashed password and given password 
-**GetResetToken** To generate a token for resetting the password
-> 
-> `Course`
-**Title** type, required, minLength, maxLength 
-**Description** type, required, minLength 
-**Lectures** title,description,videos { public_id,url } 
-**Poster** public_id, url 
-**Views** type, default 
-**NumOfVideos** type, default 
-**Category** type, required 
-**CreatedBy** type, required 
-**CreatedAt** type, default
-> 
-> `Payment`
-**Razorpay_Subscription_Id** type, required 
-**Razorpay_Payment_Id** type, required 
-**Razorpay_Signature** type, required 
-**CreatedAt** type, default
-> 
-> `Stats`
-**User** type, default 
-**Subscription** type, default 
-**Views** type, default 
-**CreatedAt** type, default
+`User Methods`
+
+ - > **PreSave** hash password before saving user 
+ - >**GetJWTToken** To generate jwt token     
+ - >**ComparePassword** To compare hashed passwords and given a password    
+ - > **GetResetToken** To generate a token for resetting the password
+
+ `Course`
+
+ - > **Title** type, required, minLength, maxLength 
+ - > **Description** type, required, minLength 
+ - > **Lectures** title,description,videos { public_id,url } 
+ - > **Poster** public_id, url 
+ - > **Views** type, default 
+ - > **NumOfVideos** type, default 
+ - > **Category** type, required 
+ - > **CreatedBy** type, required 
+ - > **CreatedAt** type, default
+
+ `Payment`
+
+ - > **Razorpay_Subscription_Id** type, required 
+ - > **Razorpay_Payment_Id** type, required 
+ - > **Razorpay_Signature** type, required 
+ - > **CreatedAt** type, default
+
+ `Stats`
+
+ - > **User** type, default 
+ - > **Subscription** type, default 
+ - > **Views** type, default 
+ - > **CreatedAt** type, default
 
 ## CONFIG VARIABLE
 
