@@ -99,7 +99,7 @@
 
  - **CreateCourse** To create a new course 
  - **GetAllCourses** To get all courses 
- - **AddLectures** To add lectures in course 
+ - **AddLectures** To add lectures to the course 
  - **GetCourseLectures** To lectures on a course 
  - **DeleteLecture** To delete a lecture in the course 
  - **DeleteCourse** To delete a Course in the course
@@ -118,7 +118,8 @@
  - **GetDashboardStats** To get Dashboard Stats
 
 
-## Middlewares
+##  `Middlewares`
+
 > > 
 ***Auth***
  - **IsAuthenticated** To make APIs accessible by logged in User 
@@ -137,10 +138,11 @@
 > **ErrorMiddleware** Custom error handling middleware
  
 
-## UTILS
+## `UTILS`
+
 > 
  ***DataURI*** 
-> **GetDataUri** To get URI of the file received from req.file
+> **GetDataUri** To get the URI of the file received from req.file
 > 
  ***ErrorHandler*** 
 > **ErrorHandler** Creating a custom error class extended from the default error class 
@@ -149,8 +151,7 @@
 > **SendEmail** Function to send email using nodemailer 
  
 ***SendToken*** 
-> **SendToken** Function to set a cookie in header
-
+> **SendToken** Function to set a cookie in the header
 
 ## MODELS
 
