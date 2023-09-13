@@ -36,7 +36,7 @@ function Home() {
               fontFamily={'cursive'}
               textAlign={['center', 'left']}
             />
-            <Link to="course">
+            <Link to="/course">
               <Button size={'lg'} colorScheme="yellow">
                 Explore now
               </Button>
