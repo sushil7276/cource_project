@@ -122,7 +122,7 @@
 > > 
 ***Auth***
  - **IsAuthenticated** To make APIs accessible by logged in User 
- - **AuthorizeSubscribers** To make APIs accessible only by Subscribers 
+ - **AuthorizeSubscribers** To make APIs accessible only to Subscribers 
  -  **AuthorizeAdmin** To make APIs accessible only by Admin
 
 
@@ -137,19 +137,20 @@
 > **ErrorMiddleware** Custom error handling middleware
  
 
- `UTILS`
+`UTILS`
 > 
-> ***DataURI*** 
-> **GetDataUri** To get the uri of the file received from req.file
+ ***DataURI*** 
+> **GetDataUri** To get URI of the file received from req.file
 > 
-> ***ErrorHandler*** 
+ ***ErrorHandler*** 
 > **ErrorHandler** Creating a custom error class extended from the default error class 
-> 
-> ***SendEmail*** 
+ 
+***SendEmail*** 
 > **SendEmail** Function to send email using nodemailer 
-> 
-> ***SendToken*** 
-> **SendToken** Function to set a cookie in the header
+ 
+***SendToken*** 
+> **SendToken** Function to set a cookie in header
+
 
 ## MODELS
 
