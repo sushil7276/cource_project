@@ -118,7 +118,7 @@
  - **GetDashboardStats** To get Dashboard Stats
 
 
-> `Middlewares`
+## Middlewares
 > > 
 ***Auth***
  - **IsAuthenticated** To make APIs accessible by logged in User 
@@ -137,7 +137,7 @@
 > **ErrorMiddleware** Custom error handling middleware
  
 
-`UTILS`
+## UTILS
 > 
  ***DataURI*** 
 > **GetDataUri** To get URI of the file received from req.file
