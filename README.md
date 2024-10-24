@@ -92,4 +92,4 @@
  - getDashboardStats
 
 AppLink :- `
->     https://course-five-livid.vercel.app/
+>     https://cource-project-rho.vercel.app
