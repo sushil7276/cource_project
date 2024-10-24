@@ -94,7 +94,7 @@ function About() {
         </Link>
       </Stack>
 
-      <VideoPlayer />
+{/*       <VideoPlayer /> */}
 
       <TandC termsAndCondition={termsAndCondition} />
 
