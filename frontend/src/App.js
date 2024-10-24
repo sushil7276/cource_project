@@ -31,7 +31,7 @@ import Loader from './components/Layout/Loader/Loader';
 
 function App() {
   // window.addEventListener('contextmenu', e => {
-  //   e.preventDefault();  8149414121
+  //   e.preventDefault(); 
   // });
 
   const { isAuthenticated, user, message, error, loading } = useSelector(
