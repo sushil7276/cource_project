@@ -92,4 +92,4 @@
  - getDashboardStats
 
 AppLink :- `
->     [https://cource-project-rho.vercel.app/]
+>     https://cource-project-rho.vercel.app/
